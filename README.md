@@ -1,7 +1,7 @@
 # java-benchmarks-and-asm
 
 <table border="1">
-<caption>Codes</caption>
+<caption>ASM codes</caption>
 <tr>
 	<th>Java code</th>
 	<th>Assembly code</th>
