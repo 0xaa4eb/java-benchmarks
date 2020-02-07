@@ -9,7 +9,7 @@ public class OpenJdkWindowsAssemblyCodeExtractor {
 
     private static final String C2_COMPILED_METHOD_HEADER = "============================= C2-compiled nmethod ==============================";
     private static final String C1_COMPILED_METHOD_HEADER = "============================= C1-compiled nmethod ==============================";
-    private static final Pattern REGEX = Pattern.compile("Compiled method \\(c[12]\\)[\\s\\d]+([.]+)::(.+) \\(\\d+ bytes\\)");
+    private static final Pattern REGEX = Pattern.compile("Compiled method \\(c[12]\\)[\\s\\d]+([a-zA-Z0-9.]+)::(.+) \\(\\d+ bytes\\)", Pattern.DOTALL);
     private static final String VERIFIED_ENTRY_POINT = "[Verified Entry Point]";
     private static final String ASSEMBLY_METHOD_END = "--------------------------------------------------------------------------------";
 
