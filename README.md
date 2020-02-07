@@ -1,6 +1,6 @@
 # java-benchmarks-and-asm
 
-<table border="1">
+<table border="1" style='font-family:"Courier New", Courier, monospace; font-size:80%'>
 <caption>ASM codes</caption>
 <tr>
 	<th>Java code</th>
