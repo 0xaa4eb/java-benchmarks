@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SingleSnapshotBenchmark {
+public @interface SingleShotBenchmark {
 
     int batchSize() default 10000;
 

@@ -1,6 +1,8 @@
 package com.chibik.perf.report;
 
-public class HTMLTableBuilder {
+import java.util.List;
+
+public class HTMLTable implements HTMLElement {
 
     private int columns;
     private Props props;
@@ -18,7 +20,7 @@ public class HTMLTableBuilder {
 
     public static class Props {
         public boolean border = true;
-        String caption = "";
+        String caption = null;
 
         public Props border(boolean border) {
             this.border = border;
@@ -31,45 +33,51 @@ public class HTMLTableBuilder {
         }
     }
 
-    public HTMLTableBuilder(Props props, String... headerNames) {
+    public HTMLTable(Props props, List<HTMLElement> headerNames) {
+        this.props = props;
+        this.columns = headerNames.size();
+
+        addTableHeader(headerNames.toArray(new HTMLElement[0]));
+    }
+
+    public HTMLTable(Props props, HTMLElement... headerNames) {
         this.props = props;
         this.columns = headerNames.length;
 
         addTableHeader(headerNames);
     }
 
-    private void addTableHeader(String... values) {
+    private void addTableHeader(HTMLElement... values) {
         if (values.length != columns) {
             throw new RuntimeException("Invalid number of values for a row");
         }
 
         table.append(ROW_START).append("\n");
-        for (String value : values) {
-            table.append("\t").append(HEADER_CELL_START).append(prepare(value)).append(HEADER_CELL_END).append("\n");
+        for (var value : values) {
+            table.append("\t").append(HEADER_CELL_START).append(value.render()).append(HEADER_CELL_END).append("\n");
         }
         table.append(ROW_END).append("\n");
     }
 
-    public void addRowValues(String... values) {
-        if (values.length != columns) {
+    public void addRowValues(List<HTMLElement> row) {
+        if (row.size() != columns) {
             throw new RuntimeException("Invalid number of values for a row");
         }
 
         table.append(ROW_START).append("\n");
-        for (String value : values) {
-            table.append("\t").append(ROW_CELL_START).append(prepare(value)).append(ROW_CELL_END).append("\n");
+        for (var value : row) {
+            table.append("\t").append(ROW_CELL_START).append(value.render()).append(ROW_CELL_END).append("\n");
         }
         table.append(ROW_END).append("\n");
     }
 
-    private String prepare(String text) {
-        return text.replace("\r", "").replace("\n", "<br/>");
-    }
-
-    public String build() {
+    @Override
+    public String render() {
         StringBuilder htmlTable = new StringBuilder();
         htmlTable.append(TABLE_START_BORDER).append("\n");
-        htmlTable.append(CAPTION_START).append(props.caption).append(CAPTION_END).append("\n");
+        if (props.caption != null) {
+            htmlTable.append(CAPTION_START).append(props.caption).append(CAPTION_END).append("\n");
+        }
         htmlTable.append(table);
         htmlTable.append(TABLE_END);
         return htmlTable.toString();

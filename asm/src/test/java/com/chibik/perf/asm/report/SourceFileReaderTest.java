@@ -1,5 +1,6 @@
 package com.chibik.perf.asm.report;
 
+import com.chibik.perf.report.ReportBuildException;
 import org.junit.Test;
 import org.junit.matchers.JUnitMatchers;
 

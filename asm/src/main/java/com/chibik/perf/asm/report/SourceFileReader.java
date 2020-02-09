@@ -1,5 +1,7 @@
 package com.chibik.perf.asm.report;
 
+import com.chibik.perf.report.ReportBuildException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;

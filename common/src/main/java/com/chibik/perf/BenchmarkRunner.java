@@ -80,7 +80,7 @@ public class BenchmarkRunner {
                 }
             }
 
-            SingleSnapshotBenchmark ssBench = clazz.getAnnotation(SingleSnapshotBenchmark.class);
+            SingleShotBenchmark ssBench = clazz.getAnnotation(SingleShotBenchmark.class);
             if (ssBench != null) {
                 optionsBuilder = optionsBuilder
                         .mode(Mode.SingleShotTime)

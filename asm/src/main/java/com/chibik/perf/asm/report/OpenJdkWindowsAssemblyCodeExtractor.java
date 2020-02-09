@@ -1,5 +1,7 @@
 package com.chibik.perf.asm.report;
 
+import com.chibik.perf.report.ReportBuildException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

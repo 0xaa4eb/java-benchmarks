@@ -1,17 +1,17 @@
 package com.chibik.perf.asm.report;
 
-import com.chibik.perf.report.HTMLTableBuilder;
+import com.chibik.perf.report.HTMLTable;
+import com.chibik.perf.report.HTMLText;
+import com.chibik.perf.report.ReportBuildException;
 
+import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ReportBuilder {
 
     public void build(String systemOutOutput, OutputStream targetStream) {
-        HTMLTableBuilder tableBuilder = new HTMLTableBuilder(new HTMLTableBuilder.Props().caption("Codes"), "Java code", "Assembly code");
+        HTMLTable table = new HTMLTable(new HTMLTable.Props().caption("Codes"), Arrays.asList(HTMLText.of("Java code"), HTMLText.of("Assembly code")));
         OpenJdkWindowsAssemblyCodeExtractor extractor = new OpenJdkWindowsAssemblyCodeExtractor(systemOutOutput);
 
         var sourceFileReader = new SourceFileReader();
@@ -30,9 +30,13 @@ public class ReportBuilder {
             ClassFileSource source = sourceFileReader.get(code.getClassName());
             String benchmarkMethodSource = new ClassFileParser().findBenchmarkMethod(source, code.getMethodName());
 
-            tableBuilder.addRowValues(benchmarkMethodSource, code.getCode());
+            table.addRowValues(Arrays.asList(HTMLText.of(benchmarkMethodSource), HTMLText.of(code.getCode())));
         }
 
-        System.out.println(tableBuilder.build());
+        try {
+            targetStream.write(table.render().getBytes());
+        } catch (IOException e) {
+            throw new ReportBuildException("Error while writing to stream", e);
+        }
     }
 }
