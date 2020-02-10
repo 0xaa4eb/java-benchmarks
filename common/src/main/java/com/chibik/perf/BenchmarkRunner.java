@@ -15,6 +15,8 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class BenchmarkRunner {
 
@@ -117,7 +119,14 @@ public class BenchmarkRunner {
             Collection<RunResult> results = new ArrayList<>();
             BenchmarkList benchmarkList = BenchmarkList.defaultList();
 
-            Set<BenchmarkListEntry> entities = benchmarkList.getAll(OutputFormatFactory.createFormatInstance(System.out, VerboseMode.NORMAL), Collections.emptyList());
+            var entities = benchmarkList
+                    .getAll(OutputFormatFactory.createFormatInstance(System.out, VerboseMode.NORMAL), Collections.emptyList())
+                    .stream()
+                    .collect(Collectors.groupingBy(BenchmarkListEntry::getUserClassQName))
+                    .values()
+                    .stream()
+                    .map(values -> values.iterator().next())
+                    .collect(Collectors.toList());
 
             for (var entity : entities) {
                 if (entity.getUserClassQName().startsWith(packageName)) {
