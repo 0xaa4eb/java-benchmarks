@@ -7,6 +7,8 @@ public class HTMLPageBuilder implements HTMLElement {
     private static final String META = "<meta charset=\"utf-8\">";
     private static final String HEAD_START = "<head>";
     private static final String HEAD_END = "</head>";
+    private static final String TITLE_START = "<title>";
+    private static final String TITLE_END = "</title>";
     private static final String BODY_START = "<body>";
     private static final String BODY_END = "</body>";
 
@@ -16,8 +18,10 @@ public class HTMLPageBuilder implements HTMLElement {
         builder.append(HTML_START).append("\n");
         builder.append(HEAD_START).append("\n")
                 .append(META).append("\n")
+                .append(TITLE_START).append("\n")
                 .append(title)
-                .append(HEAD_END);
+                .append(TITLE_END).append("\n")
+                .append(HEAD_END).append("\n");
 
         builder.append(BODY_START);
     }
