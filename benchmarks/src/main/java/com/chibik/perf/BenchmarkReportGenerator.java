@@ -12,7 +12,8 @@ import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.chibik.perf.report.HTMLText.of;
+import static com.chibik.perf.report.HTMLElement.h3;
+import static com.chibik.perf.report.HTMLElement.text;
 import static java.util.stream.Collectors.toList;
 
 public class BenchmarkReportGenerator {
@@ -42,29 +43,29 @@ public class BenchmarkReportGenerator {
                 throw new ReportBuildException("Class not found", e);
             }
 
-            page.append(of("Benchmark " + benchmarkClass.getName()));
+            page.append(h3(text(benchmarkClass.getName())));
 
             RunResult first = entry.getValue().get(0);
             List<String> parameterKeys = new ArrayList<>(first.getParams().getParamsKeys());
             boolean batchMeasurement = first.getParams().getMeasurement().getBatchSize() > 1;
             List<HTMLElement> columns = new ArrayList<>();
-            columns.add(of("Benchmark"));
+            columns.add(text("Benchmark"));
             columns.addAll(parameterKeys.stream().map(HTMLText::of).collect(Collectors.toList()));
             if (batchMeasurement) {
-                columns.add(of("Batch size"));
-                columns.add(of("Score(total)"));
-                columns.add(of("Score unit"));
-                columns.add(of("Per op(per call)"));
-                columns.add(of("Per op unit"));
-                columns.add(of("Allocated"));
-                columns.add(of("Allocated unit"));
+                columns.add(text("Batch size"));
+                columns.add(text("Score(total)"));
+                columns.add(text("Score unit"));
+                columns.add(text("Per op(per call)"));
+                columns.add(text("Per op unit"));
+                columns.add(text("Allocated"));
+                columns.add(text("Allocated unit"));
             } else {
-                columns.add(of("Score"));
-                columns.add(of("Score unit"));
-                columns.add(of("Allocated"));
-                columns.add(of("Allocated unit"));
+                columns.add(text("Score"));
+                columns.add(text("Score unit"));
+                columns.add(text("Allocated"));
+                columns.add(text("Allocated unit"));
             }
-            columns.add(HTMLText.of("Description"));
+            columns.add(HTMLElement.text("Description"));
 
             Comment comment = benchmarkClass.getAnnotation(Comment.class);
             if (comment != null) {
@@ -102,7 +103,7 @@ public class BenchmarkReportGenerator {
 
                     if (batchMeasurement) {
                         int batchSize = result.getParams().getMeasurement().getBatchSize();
-                        row.add(of(batchSize));
+                        row.add(text(batchSize));
                     }
 
                     Score score = new Score(
@@ -110,8 +111,8 @@ public class BenchmarkReportGenerator {
                             ScoreTimeUnit.byTimeUnit(result.getPrimaryResult().getScoreUnit())
                     );
 
-                    row.add(of(String.format("%.3f", score.getVal())));
-                    row.add(of(score.getUnit().getValue(mode)));
+                    row.add(text(String.format("%.3f", score.getVal())));
+                    row.add(text(score.getUnit().getValue(mode)));
 
                     if (batchMeasurement) {
                         Score batchPerOpScore;
@@ -124,17 +125,17 @@ public class BenchmarkReportGenerator {
                         }
                         convertedPerOpScore = ScoreTimeUnit.convertToReadable(batchPerOpScore);
 
-                        row.add(of(String.format("%.3f", convertedPerOpScore.getVal())));
-                        row.add(of(convertedPerOpScore.getUnit().getValue(mode)));
+                        row.add(text(String.format("%.3f", convertedPerOpScore.getVal())));
+                        row.add(text(convertedPerOpScore.getUnit().getValue(mode)));
                     }
-                    row.add(of(String.format("%.3f", result.getSecondaryResults().get("·gc.alloc.rate.norm").getScore())));
-                    row.add(of(result.getSecondaryResults().get("·gc.alloc.rate.norm").getScoreUnit()));
+                    row.add(text(String.format("%.3f", result.getSecondaryResults().get("·gc.alloc.rate.norm").getScore())));
+                    row.add(text(result.getSecondaryResults().get("·gc.alloc.rate.norm").getScoreUnit()));
 
                     Comment methodComment = benchmarkMethod.getAnnotation(Comment.class);
                     if (methodComment != null) {
-                        row.add(of(methodComment.value()));
+                        row.add(text(methodComment.value()));
                     } else {
-                        row.add(of("No comment"));
+                        row.add(text("No comment"));
                     }
 
                     table.addRowValues(row);
