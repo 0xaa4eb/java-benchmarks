@@ -42,6 +42,8 @@ public class BenchmarkReportGenerator {
                 throw new ReportBuildException("Class not found", e);
             }
 
+            page.append(of("Benchmark " + benchmarkClass.getName()));
+
             RunResult first = entry.getValue().get(0);
             List<String> parameterKeys = new ArrayList<>(first.getParams().getParamsKeys());
             boolean batchMeasurement = first.getParams().getMeasurement().getBatchSize() > 1;
