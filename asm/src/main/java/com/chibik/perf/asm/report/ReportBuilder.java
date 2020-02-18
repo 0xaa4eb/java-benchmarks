@@ -3,6 +3,7 @@ package com.chibik.perf.asm.report;
 import com.chibik.perf.report.HTMLTable;
 import com.chibik.perf.report.HTMLText;
 import com.chibik.perf.report.ReportBuildException;
+import com.chibik.perf.util.PrintAssembly;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -22,6 +23,8 @@ public class ReportBuilder {
         codes.addAll(extractor.extractC2Compiled());
         codes.addAll(extractor.extractC1Compiled());
 
+        codes.sort(Comparator.comparing(this::getComplexity));
+
         for (AssemblyCode code : codes) {
             if (!processedMethods.add(code.getMethod())) {
                 continue;
@@ -38,5 +41,15 @@ public class ReportBuilder {
         } catch (IOException e) {
             throw new ReportBuildException("Error while writing to stream", e);
         }
+    }
+
+    private int getComplexity(AssemblyCode code) {
+        PrintAssembly annotation = null;
+        try {
+            annotation = Class.forName(code.getClassName()).getAnnotation(PrintAssembly.class);
+        } catch (ClassNotFoundException e) {
+            throw new ReportBuildException(e);
+        }
+        return annotation != null ? annotation.complexity() : 1;
     }
 }

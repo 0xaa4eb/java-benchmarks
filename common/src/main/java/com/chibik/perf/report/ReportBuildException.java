@@ -8,4 +8,8 @@ public class ReportBuildException extends RuntimeException {
     public ReportBuildException(String message, Throwable cause) {
         super(message, cause);
     }
+
+    public ReportBuildException(Throwable cause) {
+        super(cause);
+    }
 }
