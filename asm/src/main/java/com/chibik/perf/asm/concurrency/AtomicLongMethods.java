@@ -7,7 +7,7 @@ import org.openjdk.jmh.annotations.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @State(Scope.Benchmark)
-@PrintAssembly
+@PrintAssembly(complexity = 10)
 public class AtomicLongMethods {
 
     private final AtomicLong atomicLong = new AtomicLong(0);

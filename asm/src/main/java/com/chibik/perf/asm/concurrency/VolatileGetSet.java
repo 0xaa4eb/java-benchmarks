@@ -5,7 +5,7 @@ import com.chibik.perf.util.PrintAssembly;
 import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
-@PrintAssembly
+@PrintAssembly(complexity = 10)
 public class VolatileGetSet {
 
     private volatile long volatileField;

@@ -8,7 +8,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.State;
 
 @State(Scope.Benchmark)
-@PrintAssembly
+@PrintAssembly(complexity = 30)
 @AdditionalForkJvmKeys("-XX:+UseG1GC")
 public class ObjectConstructorWithG1 {
 

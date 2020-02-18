@@ -6,7 +6,7 @@ import com.chibik.perf.util.PrintAssembly;
 import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
-@PrintAssembly
+@PrintAssembly(complexity = 30)
 @AdditionalForkJvmKeys("-XX:+UseParallelOldGC")
 public class ObjectConstructorWithThroughputCollector {
 

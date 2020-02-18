@@ -9,7 +9,7 @@ import java.lang.invoke.MethodHandles;
 import java.lang.invoke.VarHandle;
 
 @State(Scope.Benchmark)
-@PrintAssembly
+@PrintAssembly(complexity = 10)
 public class VarHandleAcquierRelease {
 
     private static final VarHandle AA;
