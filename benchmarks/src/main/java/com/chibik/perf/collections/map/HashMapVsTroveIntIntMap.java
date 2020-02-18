@@ -52,7 +52,7 @@ public class HashMapVsTroveIntIntMap {
     }
 
     @Benchmark
-    public void tIntIntHashMap() {
+    public void troveIntIntHashMap() {
         tIntIntHashMap.put(data[index], 1);
     }
 
