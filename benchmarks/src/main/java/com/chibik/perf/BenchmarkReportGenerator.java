@@ -27,15 +27,18 @@ public class BenchmarkReportGenerator {
     public void build(OutputStream target) {
         HTMLPageBuilder page = new HTMLPageBuilder("Benchmarks results");
 
-        Map<String, List<RunResult>> aggregatedByClassName =
+        List<Map.Entry<String, List<RunResult>>> sortedResults =
                 runResults.stream().collect(
                         Collectors.groupingBy(
                                 x -> x.getParams().getBenchmark().substring(0, x.getParams().getBenchmark().lastIndexOf(".")),
                                 toList()
-                        )
-                );
+                        ))
+                        .entrySet()
+                        .stream()
+                        .sorted(Comparator.comparing(Map.Entry<String, List<RunResult>>::getKey))
+                        .collect(toList());
 
-        for (Map.Entry<String, List<RunResult>> entry : aggregatedByClassName.entrySet()) {
+        for (Map.Entry<String, List<RunResult>> entry : sortedResults) {
             Class<?> benchmarkClass;
             try {
                 benchmarkClass = this.getClass().getClassLoader().loadClass(entry.getKey());
