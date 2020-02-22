@@ -1,6 +1,7 @@
 package com.chibik.perf.cpu;
 
 import com.chibik.perf.BenchmarkRunner;
+import com.chibik.perf.util.CacheUtil;
 import com.chibik.perf.util.Comment;
 import com.chibik.perf.util.SingleShotBenchmark;
 import org.openjdk.jmh.annotations.*;
@@ -98,7 +99,7 @@ public class MemReadLatency {
 
     @Setup(Level.Iteration)
     public void setUp(Blackhole blackhole) {
-//        blackhole.consume(CacheUtil.evictCacheLines());
+        blackhole.consume(CacheUtil.evictCacheLines());
 
         index = 0;
     }
