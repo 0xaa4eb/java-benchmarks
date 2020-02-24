@@ -5,7 +5,7 @@ import com.chibik.perf.util.AvgTimeBenchmark;
 import com.chibik.perf.util.Comment;
 import org.openjdk.jmh.annotations.*;
 
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ThreadLocalRandom;
 
 @State(Scope.Benchmark)
 @AvgTimeBenchmark
@@ -18,8 +18,8 @@ public class VolatileLoadVsNormalLoad {
 
     @Setup(Level.Iteration)
     public void setUp() {
-        volatil = 0xdeadbeef;
-        normal = 0xcafebabe;
+        volatil = ThreadLocalRandom.current().nextLong();
+        normal = ThreadLocalRandom.current().nextLong();
     }
 
     @Benchmark
