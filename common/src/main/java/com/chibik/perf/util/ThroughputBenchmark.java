@@ -11,4 +11,8 @@ import java.util.concurrent.TimeUnit;
 public @interface ThroughputBenchmark {
 
     TimeUnit timeUnit() default TimeUnit.NANOSECONDS;
+
+    int warmupIterations() default 10;
+
+    int iterations() default 10;
 }

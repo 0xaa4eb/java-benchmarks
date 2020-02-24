@@ -71,8 +71,8 @@ public class BenchmarkRunner {
             if (avgTimeBench != null || thrptAnnotation != null) {
                 optionsBuilder = optionsBuilder
                         .mode(avgTimeBench != null ? Mode.AverageTime : Mode.Throughput)
-                        .warmupIterations(10)
-                        .measurementIterations(10)
+                        .warmupIterations(avgTimeBench != null ? avgTimeBench.warmupIterations() : thrptAnnotation.warmupIterations())
+                        .measurementIterations(avgTimeBench != null ? avgTimeBench.iterations() : thrptAnnotation.iterations())
                         .warmupTime(TimeValue.seconds(1))
                         .measurementTime(TimeValue.seconds(1));
                 if (avgTimeBench != null) {
