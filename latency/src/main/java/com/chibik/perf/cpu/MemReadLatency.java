@@ -12,8 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = MemReadLatency.BATCH_SIZE, timeUnit = TimeUnit.MICROSECONDS, iterations = 50)
-@Comment("Initialize array of a random numbers and put all them to the map. " +
-        "Test measures get() method time. 1 is used as a value")
+@Comment("Read cold memory once")
 public class MemReadLatency {
 
     public static final int BATCH_SIZE = 10000;
