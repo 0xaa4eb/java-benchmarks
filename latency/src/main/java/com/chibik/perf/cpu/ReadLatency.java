@@ -1,10 +1,7 @@
 package com.chibik.perf.cpu;
 
 import com.chibik.perf.BenchmarkRunner;
-import com.chibik.perf.util.CacheUtil;
-import com.chibik.perf.util.Comment;
-import com.chibik.perf.util.SingleShotBenchmark;
-import com.chibik.perf.util.Padder;
+import com.chibik.perf.util.*;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
@@ -13,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = ReadLatency.BATCH_SIZE)
 @Comment("Read cold memory once")
-public class ReadLatency {
+public class ReadLatency extends IndexedLatencyBenchmark {
 
     public static final int BATCH_SIZE = 1000000;
 
@@ -36,21 +33,9 @@ public class ReadLatency {
         }
     }
 
-    @Setup(Level.Iteration)
-    public void setUp(Blackhole blackhole) {
-        blackhole.consume(CacheUtil.evictCacheLines());
-
-        index = 0;
-    }
-
     @Benchmark
     public long read() {
         return arr[index].value;
-    }
-
-    @TearDown(Level.Invocation)
-    public void inc() {
-        index++;
     }
 
     public static void main(String[] args) {

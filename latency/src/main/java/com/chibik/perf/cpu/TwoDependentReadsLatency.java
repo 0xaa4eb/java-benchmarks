@@ -8,7 +8,7 @@ import org.openjdk.jmh.infra.Blackhole;
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = TwoDependentReadsLatency.BATCH_SIZE)
 @Comment("Read two dependent addresses. This may not be done in parallel")
-public class TwoDependentReadsLatency {
+public class TwoDependentReadsLatency extends IndexedLatencyBenchmark {
 
     public static final int BATCH_SIZE = 1000000;
 
@@ -33,29 +33,17 @@ public class TwoDependentReadsLatency {
     }
 
     private StateHolder[] arr;
-    private int index;
 
     @Setup(Level.Trial)
     public void setUpTrial() {
         arr = MemUtil.val(BATCH_SIZE, StateHolder.class, StateHolder::new);
     }
 
-    @Setup(Level.Iteration)
-    public void setUp(Blackhole blackhole) {
-        blackhole.consume(CacheUtil.evictCacheLines());
-        index = 0;
-    }
-
     @Benchmark
     public void read(Blackhole blackhole) {
-        Link link = arr[index].getLink();
+        Link link = arr[getIndex()].getLink();
         blackhole.consume(link.value);
         blackhole.consume(link);
-    }
-
-    @TearDown(Level.Invocation)
-    public void inc() {
-        index++;
     }
 
     public static void main(String[] args) {
