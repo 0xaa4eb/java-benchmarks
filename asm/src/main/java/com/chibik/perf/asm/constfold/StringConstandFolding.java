@@ -24,6 +24,11 @@ public class StringConstandFolding {
         return s;
     }
 
+    @Benchmark
+    public int returnHashCode() {
+        return s.hashCode();
+    }
+
     public static void main(String[] args) {
         BenchmarkRunner.run(StringConstandFolding.class);
     }
