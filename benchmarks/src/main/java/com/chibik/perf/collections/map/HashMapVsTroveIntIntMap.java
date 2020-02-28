@@ -27,14 +27,12 @@ public class HashMapVsTroveIntIntMap {
     private int[] data = new int[BATCH_SIZE];
     private int index;
 
-    @Setup(Level.Iteration)
+    @Setup(Level.Trial)
     public void setUp() {
         Random r = new Random(30L);
         for (int i = 0; i < data.length; i++) {
             data[i] = r.nextInt(50000000);
         }
-
-        index = 0;
 
         hashMap = new HashMap<>();
         tIntIntHashMap = new TIntIntHashMap();
