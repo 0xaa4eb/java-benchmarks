@@ -3,7 +3,6 @@ package com.chibik.perf.cpu;
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.*;
 import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.infra.Blackhole;
 
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = TwoParallelReadsLatency.BATCH_SIZE)
