@@ -1,4 +1,4 @@
-package com.chibik.perf.cpu;
+package com.chibik.perf.latency.cpu;
 
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.Comment;
