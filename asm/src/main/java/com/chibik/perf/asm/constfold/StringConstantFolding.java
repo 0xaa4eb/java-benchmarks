@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
 @PrintAssembly
-public class StringConstandFolding {
+public class StringConstantFolding {
 
     private static final String s = "asdfgdshjffasd";
 
@@ -30,6 +30,6 @@ public class StringConstandFolding {
     }
 
     public static void main(String[] args) {
-        BenchmarkRunner.run(StringConstandFolding.class);
+        BenchmarkRunner.run(StringConstantFolding.class);
     }
 }
