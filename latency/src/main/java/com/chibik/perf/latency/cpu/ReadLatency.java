@@ -25,7 +25,6 @@ public class ReadLatency extends IndexedLatencyBenchmark {
     }
 
     private final StateHolder[] arr = new StateHolder[BATCH_SIZE];
-    private int index;
 
     @Setup(Level.Trial)
     public void setUpTrial() {
@@ -37,7 +36,7 @@ public class ReadLatency extends IndexedLatencyBenchmark {
 
     @Benchmark
     public long read() {
-        return arr[index].value;
+        return arr[getIndex()].value;
     }
 
     public static void main(String[] args) {
