@@ -36,7 +36,7 @@ public class TwoDependentReadsLatency extends IndexedLatencyBenchmark {
 
     @Setup(Level.Trial)
     public void setUpTrial() {
-        arr = MemUtil.val(BATCH_SIZE, StateHolder.class, StateHolder::new);
+        arr = MemUtil.allocateArray(BATCH_SIZE, StateHolder.class, StateHolder::new);
     }
 
     @Benchmark
