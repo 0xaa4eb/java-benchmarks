@@ -14,7 +14,6 @@
         <module>common</module>
         <module>latency</module>
         <module>benchmarks</module>
-        <module>benchmarks-kotlin</module>
     </modules>
 
     <dependencies>
