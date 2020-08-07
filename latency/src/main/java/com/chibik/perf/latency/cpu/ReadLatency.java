@@ -1,10 +1,7 @@
 package com.chibik.perf.latency.cpu;
 
 import com.chibik.perf.BenchmarkRunner;
-import com.chibik.perf.util.Comment;
-import com.chibik.perf.util.IndexedLatencyBenchmark;
-import com.chibik.perf.util.Padder;
-import com.chibik.perf.util.SingleShotBenchmark;
+import com.chibik.perf.util.*;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -24,14 +21,11 @@ public class ReadLatency extends IndexedLatencyBenchmark {
         }
     }
 
-    private final StateHolder[] arr = new StateHolder[BATCH_SIZE];
+    private StateHolder[] arr;
 
     @Setup(Level.Trial)
     public void setUpTrial() {
-        for (int i = 0; i < arr.length; i++) {
-            arr[i] = new StateHolder();
-            arr[i].value = arr[i].getHeadXored();
-        }
+        arr = MemUtil.allocateArray(BATCH_SIZE, StateHolder.class, StateHolder::new);
     }
 
     @Benchmark
