@@ -4,6 +4,8 @@ import com.chibik.perf.util.*;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.GCProfiler;
+import org.openjdk.jmh.profile.LinuxPerfNormProfiler;
+import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.BenchmarkList;
 import org.openjdk.jmh.runner.BenchmarkListEntry;
@@ -91,6 +93,12 @@ public class BenchmarkRunner {
                         .measurementBatchSize(ssBench.batchSize())
                         .warmupBatchSize(ssBench.batchSize());
                 optionsBuilder = optionsBuilder.timeUnit(ssBench.timeUnit());
+            }
+
+            PerfCounterProfiled perfCounters = clazz.getAnnotation(PerfCounterProfiled.class);
+
+            if (perfCounters != null && perfCounters.value().length > 0) {
+                optionsBuilder.addProfiler(LinuxPerfNormProfiler.class, "events=" + String.join(",", perfCounters.value()));
             }
 
             Collection<RunResult> runResults = new Runner(optionsBuilder.build()).run();
