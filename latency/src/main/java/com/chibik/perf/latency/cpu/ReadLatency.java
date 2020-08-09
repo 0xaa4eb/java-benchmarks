@@ -9,6 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = ReadLatency.BATCH_SIZE)
 @Comment("Read cold memory once")
+@PerfCounterProfiled({"LLC-load-misses"})
 public class ReadLatency extends IndexedLatencyBenchmark {
 
     public static final int BATCH_SIZE = 1000000;
@@ -29,8 +30,13 @@ public class ReadLatency extends IndexedLatencyBenchmark {
     }
 
     @Benchmark
-    public long read() {
+    public long readColdMemory() {
         return arr[getIndex()].value;
+    }
+
+    @Benchmark
+    public long readSameMemory() {
+        return arr[0].value;
     }
 
     public static void main(String[] args) {
