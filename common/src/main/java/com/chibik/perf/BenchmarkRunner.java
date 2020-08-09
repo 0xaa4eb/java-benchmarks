@@ -1,9 +1,11 @@
 package com.chibik.perf;
 
 import com.chibik.perf.util.*;
+import org.apache.commons.lang3.SystemUtils;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.GCProfiler;
+import org.openjdk.jmh.profile.LinuxPerfAsmProfiler;
 import org.openjdk.jmh.profile.LinuxPerfNormProfiler;
 import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.results.RunResult;
@@ -41,6 +43,8 @@ public class BenchmarkRunner {
                 forkJvmArgs.add("-XX:CompileCommand=print,*" + clazz.getSimpleName() + ".*");
                 forkJvmArgs.add("-XX:PrintAssemblyOptions=intel,hsdis-help");
                 forkJvmArgs.add("-XX:-UseCompressedOops");
+                forkJvmArgs.add("-XX:+DebugNonSafepoints");
+                forkJvmArgs.add("-XX:+UseParallelGC");
             }
 
             forkJvmArgs.add("-Xmx8G");
@@ -99,6 +103,10 @@ public class BenchmarkRunner {
 
             if (perfCounters != null && perfCounters.value().length > 0) {
                 optionsBuilder.addProfiler(LinuxPerfNormProfiler.class, "events=" + String.join(",", perfCounters.value()));
+            }
+
+            if (printAssembly != null && SystemUtils.IS_OS_LINUX) {
+                optionsBuilder.addProfiler(LinuxPerfAsmProfiler.class);
             }
 
             Collection<RunResult> runResults = new Runner(optionsBuilder.build()).run();
