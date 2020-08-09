@@ -3,11 +3,12 @@ package com.chibik.perf.cpu;
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.AvgTimeBenchmark;
 import com.chibik.perf.util.Comment;
+import com.chibik.perf.util.PerfCounterProfiled;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
+// TODO this is a completely dumb benchmark
 @State(Scope.Thread)
 @AvgTimeBenchmark
 @Comment("Preallocate array of values (1 or 0) and iterate it. If entry == 1 then sum is incremented. " +
