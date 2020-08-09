@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.*;
 
 @State(Scope.Benchmark)
 @SingleShotBenchmark(batchSize = TwoParallelReadsLatency.BATCH_SIZE)
-@Comment("Read two not dependent addresses, CPU should do this in parallel")
+@Comment("Read two independent addresses, CPU should be able this in parallel")
 public class TwoParallelReadsLatency extends IndexedLatencyBenchmark {
 
     public static final int BATCH_SIZE = 1000000;
