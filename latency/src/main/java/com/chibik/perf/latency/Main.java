@@ -1,6 +1,5 @@
 package com.chibik.perf.latency;
 
-import com.chibik.perf.BenchmarkReportGenerator;
 import com.chibik.perf.BenchmarkRunner;
 import org.openjdk.jmh.results.RunResult;
 

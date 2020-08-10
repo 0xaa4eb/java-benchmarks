@@ -7,19 +7,20 @@ import org.openjdk.jmh.infra.BenchmarkParams;
 import org.openjdk.jmh.profile.GCProfiler;
 import org.openjdk.jmh.profile.LinuxPerfAsmProfiler;
 import org.openjdk.jmh.profile.LinuxPerfNormProfiler;
-import org.openjdk.jmh.profile.LinuxPerfProfiler;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.runner.BenchmarkList;
 import org.openjdk.jmh.runner.BenchmarkListEntry;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.format.OutputFormatFactory;
-import org.openjdk.jmh.runner.options.*;
+import org.openjdk.jmh.runner.options.ChainedOptionsBuilder;
+import org.openjdk.jmh.runner.options.OptionsBuilder;
+import org.openjdk.jmh.runner.options.TimeValue;
+import org.openjdk.jmh.runner.options.VerboseMode;
 
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class BenchmarkRunner {
@@ -121,10 +122,6 @@ public class BenchmarkRunner {
         return run("");
     }
 
-    public Collection<RunResult> runWithoutFork(String packageName) {
-        return run(packageName, BenchmarkRunner::runWithoutFork);
-    }
-
     public Collection<RunResult> run(String packageName) {
         return run(packageName, BenchmarkRunner::run);
     }
@@ -223,9 +220,5 @@ public class BenchmarkRunner {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-
     }
 }
