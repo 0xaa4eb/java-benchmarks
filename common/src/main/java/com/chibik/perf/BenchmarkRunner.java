@@ -101,7 +101,7 @@ public class BenchmarkRunner {
 
             PerfCounterProfiled perfCounters = clazz.getAnnotation(PerfCounterProfiled.class);
 
-            if (perfCounters != null && perfCounters.value().length > 0) {
+            if (perfCounters != null && perfCounters.value().length > 0 && SystemUtils.IS_OS_LINUX) {
                 optionsBuilder.addProfiler(LinuxPerfNormProfiler.class, "events=" + String.join(",", perfCounters.value()));
             }
 
