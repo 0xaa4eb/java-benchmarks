@@ -39,23 +39,26 @@ public class BenchmarkRunner {
 
             forkJvmArgs.add("-XX:+UnlockDiagnosticVMOptions");
 
+            AdditionalForkJvmKeys additionalKeys = clazz.getAnnotation(AdditionalForkJvmKeys.class);
+
+            if (additionalKeys != null) {
+                forkJvmArgs.addAll(Arrays.asList(additionalKeys.value()));
+            }
+
             PrintAssembly printAssembly = clazz.getAnnotation(PrintAssembly.class);
             if (printAssembly != null) {
                 forkJvmArgs.add("-XX:CompileCommand=print,*" + clazz.getSimpleName() + ".*");
                 forkJvmArgs.add("-XX:PrintAssemblyOptions=intel,hsdis-help");
                 forkJvmArgs.add("-XX:-UseCompressedOops");
                 forkJvmArgs.add("-XX:+DebugNonSafepoints");
-                forkJvmArgs.add("-XX:+UseParallelGC");
+                if (forkJvmArgs.stream().noneMatch(text -> text.toLowerCase().contains("gc"))) {
+                    forkJvmArgs.add("-XX:+UseParallelGC");
+                }
             }
 
             forkJvmArgs.add("-Xmx8G");
             forkJvmArgs.add("-ea");
 
-            AdditionalForkJvmKeys additionalKeys = clazz.getAnnotation(AdditionalForkJvmKeys.class);
-
-            if (additionalKeys != null) {
-                forkJvmArgs.addAll(Arrays.asList(additionalKeys.value()));
-            }
 
             ChainedOptionsBuilder optionsBuilder = new OptionsBuilder()
                     .include(clazz.getSimpleName())
