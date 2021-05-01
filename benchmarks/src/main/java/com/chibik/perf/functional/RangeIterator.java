@@ -1,11 +1,10 @@
-package com.chibik.perf.collections.iterator;
+package com.chibik.perf.functional;
 
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.AvgTimeBenchmark;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.Iterator;
-import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @AvgTimeBenchmark
