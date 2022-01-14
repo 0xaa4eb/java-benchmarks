@@ -1,4 +1,4 @@
-package com.chibik.perf.cpu;
+package com.chibik.perf.branch;
 
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.AvgTimeBenchmark;
@@ -6,7 +6,6 @@ import com.chibik.perf.util.Comment;
 import org.openjdk.jmh.annotations.*;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 @AvgTimeBenchmark
 @State(Scope.Thread)

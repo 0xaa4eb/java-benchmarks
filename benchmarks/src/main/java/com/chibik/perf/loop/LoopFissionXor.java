@@ -1,4 +1,4 @@
-package com.chibik.perf.cpu;
+package com.chibik.perf.loop;
 
 import com.chibik.perf.BenchmarkRunner;
 import com.chibik.perf.util.AvgTimeBenchmark;
