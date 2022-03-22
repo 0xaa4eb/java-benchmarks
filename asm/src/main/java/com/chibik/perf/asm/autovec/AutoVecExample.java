@@ -17,7 +17,7 @@ public class AutoVecExample {
 
     @Setup(Level.Iteration)
     public void setUp() {
-        int size = 4 * 1024;
+        int size = 32 * 1024;
         left = new int[size];
         right = new int[size];
         sumResult = new int[size];
