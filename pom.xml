@@ -12,7 +12,6 @@
     <modules>
         <module>asm</module>
         <module>common</module>
-        <module>latency</module>
         <module>benchmarks</module>
     </modules>
 
