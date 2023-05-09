@@ -23,13 +23,6 @@ public class OptionalBenchmark {
         final DataObject dataObjectWithNonNullField = new DataObject("abc");
     }
 
-    @Benchmark
-    public void withOptionalNull(final Blackhole blackhole, final DataObjectState state) {
-        final Character result = Optional.ofNullable(state.dataObjectWithNullField.someField)
-            .map(someField -> STATUS_IF_SOME_FIELD_EXISTS)
-            .orElse(STATUS_IF_SOME_FIELD_IS_MISSING);
-        blackhole.consume(result);
-    }
 
     @Benchmark
     public void withOptionalNonNull(final Blackhole blackhole, final DataObjectState state) {
@@ -39,21 +32,6 @@ public class OptionalBenchmark {
         blackhole.consume(result);
     }
 
-    @Benchmark
-    public void withTernaryNull(final Blackhole blackhole, final DataObjectState state) {
-        final Character result = state.dataObjectWithNullField.someField == null
-            ? STATUS_IF_SOME_FIELD_IS_MISSING
-            : STATUS_IF_SOME_FIELD_EXISTS;
-        blackhole.consume(result);
-    }
-
-    @Benchmark
-    public void withTernaryNonNull(final Blackhole blackhole, final DataObjectState state) {
-        final Character result = state.dataObjectWithNonNullField.someField == null
-            ? STATUS_IF_SOME_FIELD_IS_MISSING
-            : STATUS_IF_SOME_FIELD_EXISTS;
-        blackhole.consume(result);
-    }
 
     public static void main(String[] args) throws RunnerException {
         BenchmarkRunner.run(OptionalBenchmark.class);
