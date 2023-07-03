@@ -38,6 +38,7 @@ public class BenchmarkRunner {
             List<String> forkJvmArgs = new ArrayList<>();
 
             forkJvmArgs.add("-XX:+UnlockDiagnosticVMOptions");
+            forkJvmArgs.add("--add-modules=jdk.incubator.vector");
 
             AdditionalForkJvmKeys additionalKeys = clazz.getAnnotation(AdditionalForkJvmKeys.class);
 
