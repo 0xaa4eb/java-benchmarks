@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
-import org.openjdk.jmh.annotations.Benchmark;
-import org.openjdk.jmh.annotations.Param;
-import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.*;
 
 import com.chibik.perf.BenchmarkRunner;
 
+@State(Scope.Benchmark)
 public class ToArrayBench {
 
     private int size = 100;
